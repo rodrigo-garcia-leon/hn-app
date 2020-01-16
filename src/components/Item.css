@@ -1,0 +1,11 @@
+.Item h1 {
+  color: #444444;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.Item h2 {
+  color: #bbbbbb;
+  font-size: 14px;
+}
