@@ -1,5 +1,5 @@
-function formatTime(time) {
-  const minutes = Math.floor((new Date().getTime() / 1000 - time) / 60);
+function formatTime(time, now = new Date().getTime()) {
+  const minutes = Math.floor((now / 1000 - time) / 60);
   const hours = Math.floor(minutes / 60);
 
   return minutes < 60

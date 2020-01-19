@@ -1,21 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { fetchItem } from "../services/data";
+import React from "react";
 import { formatTime } from "../shared/utils";
 import "./Item.css";
 
-function Item({ id }) {
-  const [item, setItem] = useState(null);
-
-  async function loadData() {
-    const item = await fetchItem(id);
-
-    setItem(item);
-  }
-
-  useEffect(() => {
-    loadData();
-  });
-
+function Item({ item }) {
   if (!item) {
     return null;
   }
