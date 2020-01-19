@@ -2,10 +2,10 @@ import React from "react";
 import { create, act } from "react-test-renderer";
 import ItemView from "./ItemView";
 import {
-  TEST_ITEM_22069310,
   setupFetchItemOkMock,
   setupFetchErrorMock
 } from "../services/data.test";
+import { TEST_ITEM_22069310 } from "../services/__mocks__/data";
 
 jest.mock("../shared/utils.js");
 

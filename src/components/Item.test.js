@@ -1,7 +1,7 @@
 import React from "react";
 import { create } from "react-test-renderer";
 import Item from "./Item";
-import { TEST_ITEM_22069310 } from "../services/data.test";
+import { TEST_ITEM_22069310 } from "../services/__mocks__/data";
 
 jest.mock("../shared/utils.js");
 
