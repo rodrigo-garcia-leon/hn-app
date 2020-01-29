@@ -1,5 +1,5 @@
 import React from "react";
-import ItemView from "./ItemView";
+import Item from "./Item";
 import "./List.css";
 
 function List({ items }) {
@@ -11,8 +11,8 @@ function List({ items }) {
     <section className="List">
       <ol>
         {items.map(item => (
-          <li key={item}>
-            <ItemView id={item}></ItemView>
+          <li key={item.id}>
+            <Item item={item}></Item>
           </li>
         ))}
       </ol>

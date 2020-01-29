@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 import List from "./List";
-import { fetchList } from "../services/data";
 
-export const LIST_TOP = "top";
-const SLICE_START = 0;
-const SLICE_END = 30;
-
-function ListView() {
-  const [items, setItems] = useState(null);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const items = await fetchList(LIST_TOP);
-        const slice = items.slice(SLICE_START, SLICE_END);
-
-        setItems(slice);
-      } catch (error) {
-        console.error(error);
+const LIST_TOP_PAGE_1 = gql`
+  {
+    list(id: "top", page: 1) {
+      stories {
+        id
+        by
+        score
+        time
+        title
       }
     }
+  }
+`;
 
-    loadData();
-  }, []);
+function ListView() {
+  const { loading, error, data } = useQuery(LIST_TOP_PAGE_1);
 
-  return <List items={items} />;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return <List items={data.list.stories} />;
 }
 
 export default ListView;
