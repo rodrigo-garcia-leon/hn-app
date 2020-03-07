@@ -5,7 +5,7 @@ import ListView from "./components/ListView";
 import "./App.css";
 
 const client = new ApolloClient({
-  uri: "https://cloud.rodrigogarcia.me/graphql"
+  uri: "https://cloud.rodrigogarcia.me/hn-api/graphql"
 });
 
 function App() {
