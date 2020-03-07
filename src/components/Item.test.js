@@ -1,20 +1,20 @@
 import React from "react";
-import { create } from "react-test-renderer";
+import { render } from "@testing-library/react";
 import Item from "./Item";
-import { TEST_ITEM_22069310 } from "../services/__mocks__/data";
+import { TEST_STORY_22089546 } from "hn-api";
 
 jest.mock("../shared/utils.js");
 
-describe("Item", () => {
+describe.only("Item", () => {
   test("empty", () => {
-    const element = create(<Item />).toJSON();
+    const element = render(<Item />);
 
-    expect(element).toMatchSnapshot();
+    expect(element.container).toMatchSnapshot();
   });
 
   test("ok", () => {
-    const element = create(<Item item={TEST_ITEM_22069310} />).toJSON();
+    const element = render(<Item item={TEST_STORY_22089546} />);
 
-    expect(element).toMatchSnapshot();
+    expect(element.container).toMatchSnapshot();
   });
 });

@@ -1,60 +1,73 @@
 import React from "react";
-import { create, act } from "react-test-renderer";
-import ListView from "./ListView";
+import { render } from "@testing-library/react";
+import { MockedProvider } from "@apollo/react-testing";
+import wait from "waait";
+import ListView, { QUERY_LIST_TOP_PAGE_1 } from "./ListView";
 import {
-  TEST_LIST,
-  TEST_ITEM_22069310,
-  TEST_ITEM_22089166,
-  TEST_ITEM_22089546,
-  setupFetchErrorMock
-} from "../services/data.test";
+  TEST_STORY_22069310,
+  TEST_STORY_22089546,
+  TEST_STORY_22089166,
+  queryListResult
+} from "hn-api";
 
 describe("ListView", () => {
-  let element, mockFetch;
+  let element;
 
-  const createElement = async () =>
-    act(async () => {
-      element = create(<ListView />).toJSON();
-    });
+  const TEST_STORIES = [
+    TEST_STORY_22069310,
+    TEST_STORY_22089546,
+    TEST_STORY_22089166
+  ];
 
-  beforeEach(() => {
-    mockFetch = null;
-  });
+  test("loading", () => {
+    element = render(
+      <MockedProvider mocks={[]}>
+        <ListView />
+      </MockedProvider>
+    );
 
-  afterEach(() => {
-    if (mockFetch) {
-      mockFetch.mockRestore();
-    }
-  });
-
-  test("empty", () => {
-    element = create(<ListView />).toJSON();
-
-    expect(element).toMatchSnapshot();
-  });
-
-  test("network error", async () => {
-    mockFetch = setupFetchErrorMock();
-
-    await createElement();
-    expect(element).toMatchSnapshot();
+    expect(element.container).toMatchSnapshot();
   });
 
   test("ok", async () => {
-    mockFetch = jest
-      .spyOn(global, "fetch")
-      .mockResolvedValueOnce({ json: jest.fn().mockResolvedValue(TEST_LIST) })
-      .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(TEST_ITEM_22069310)
-      })
-      .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(TEST_ITEM_22089166)
-      })
-      .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(TEST_ITEM_22089546)
-      });
+    const MOCKS = [
+      {
+        request: {
+          query: QUERY_LIST_TOP_PAGE_1
+        },
+        result: queryListResult(TEST_STORIES, true)
+      }
+    ];
 
-    await createElement();
-    expect(element).toMatchSnapshot();
+    element = render(
+      <MockedProvider mocks={MOCKS}>
+        <ListView />
+      </MockedProvider>
+    );
+
+    await wait(0);
+
+    expect(element.container).toMatchSnapshot();
+  });
+
+  test("error", async () => {
+    const MOCKS = [
+      {
+        request: {
+          query: QUERY_LIST_TOP_PAGE_1
+        },
+        error: new Error("Error")
+      }
+    ];
+
+    element = render(
+      <MockedProvider mocks={MOCKS}>
+        <ListView />
+      </MockedProvider>
+    );
+
+    await wait(0);
+
+    expect(element.container).toMatchSnapshot();
   });
 });

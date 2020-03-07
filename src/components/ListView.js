@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import List from "./List";
 
-const LIST_TOP_PAGE_1 = gql`
+export const QUERY_LIST_TOP_PAGE_1 = gql`
   {
     list(id: "top", page: 1) {
       stories {
@@ -18,10 +18,13 @@ const LIST_TOP_PAGE_1 = gql`
 `;
 
 function ListView() {
-  const { loading, error, data } = useQuery(LIST_TOP_PAGE_1);
+  const { loading, error, data } = useQuery(QUERY_LIST_TOP_PAGE_1);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error</p>;
+  if (!data || !data.list) {
+    return null;
+  }
 
   return <List items={data.list.stories} />;
 }

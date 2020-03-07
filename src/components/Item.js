@@ -7,14 +7,7 @@ function Item({ item }) {
     return null;
   }
 
-  const {
-    by,
-    // kids,
-    score,
-    time,
-    title
-    // url
-  } = item;
+  const { by, score, time, title } = item;
 
   return (
     <section className="Item">

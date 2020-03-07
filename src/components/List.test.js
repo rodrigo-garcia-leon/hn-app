@@ -1,59 +1,30 @@
 import React from "react";
-import { create, act } from "react-test-renderer";
+import { render } from "@testing-library/react";
 import List from "./List";
 import {
-  TEST_LIST,
-  TEST_ITEM_22069310,
-  TEST_ITEM_22089166,
-  TEST_ITEM_22089546,
-  setupFetchErrorMock
-} from "../services/data.test";
+  TEST_STORY_22069310,
+  TEST_STORY_22089546,
+  TEST_STORY_22089166
+} from "hn-api";
 
-describe("List", () => {
-  let element, mockFetch;
+jest.mock("../shared/utils.js");
 
-  const createElement = async () =>
-    act(async () => {
-      element = create(<List items={TEST_LIST} />).toJSON();
-    });
-
-  beforeEach(() => {
-    mockFetch = null;
-  });
-
-  afterEach(() => {
-    if (mockFetch) {
-      mockFetch.mockRestore();
-    }
-  });
-
+describe.only("List", () => {
   test("empty", () => {
-    element = create(<List />).toJSON();
+    const element = render(<List />);
 
-    expect(element).toMatchSnapshot();
+    expect(element.container).toMatchSnapshot();
   });
 
-  test("network error", async () => {
-    mockFetch = setupFetchErrorMock();
+  test("ok", () => {
+    const LIST = [
+      TEST_STORY_22069310,
+      TEST_STORY_22089546,
+      TEST_STORY_22089166
+    ];
 
-    await createElement();
-    expect(element).toMatchSnapshot();
-  });
+    const element = render(<List items={LIST} />);
 
-  test("ok", async () => {
-    mockFetch = jest
-      .spyOn(global, "fetch")
-      .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(TEST_ITEM_22069310)
-      })
-      .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(TEST_ITEM_22089166)
-      })
-      .mockResolvedValueOnce({
-        json: jest.fn().mockResolvedValue(TEST_ITEM_22089546)
-      });
-
-    await createElement();
-    expect(element).toMatchSnapshot();
+    expect(element.container).toMatchSnapshot();
   });
 });

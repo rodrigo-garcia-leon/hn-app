@@ -1,7 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`List empty 1`] = `null`;
+exports[`List empty 1`] = `<div />`;
 
-exports[`List network error 1`] = `null`;
-
-exports[`List ok 1`] = `null`;
+exports[`List ok 1`] = `
+<div>
+  <section
+    class="List"
+  >
+    <ol>
+      <li>
+        <section
+          class="Item"
+        >
+          <h1>
+            BlackRock’s decision to dump coal signals what’s next
+          </h1>
+          <h2>
+            379
+             points by 
+            evolve2k
+             
+            8 hours
+             ago
+          </h2>
+        </section>
+      </li>
+      <li>
+        <section
+          class="Item"
+        >
+          <h1>
+            GCC: C++ coroutines – Initial implementation pushed to master
+          </h1>
+          <h2>
+            67
+             points by 
+            matt_d
+             
+            8 hours
+             ago
+          </h2>
+        </section>
+      </li>
+      <li>
+        <section
+          class="Item"
+        >
+          <h1>
+            Maine's giant spinning ice disc looks like it's reforming
+          </h1>
+          <h2>
+            66
+             points by 
+            pseudolus
+             
+            8 hours
+             ago
+          </h2>
+        </section>
+      </li>
+    </ol>
+  </section>
+</div>
+`;
