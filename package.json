@@ -1,5 +1,5 @@
 {
-  "name": "hn-ui",
+  "name": "hn-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
